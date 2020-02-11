@@ -7,6 +7,7 @@ import { useServiceLoaded } from '@bit/amazingdesign.redux-rest-services.use-ser
 import { makeSrc } from '@bit/amazingdesign.amazingcms.make-downloader-src'
 
 import ProductGrid from '../src/bits/store-front/ProductGrid'
+import Cart from '../src/bits/store-front/Cart'
 
 const UseServiceLoadedPage = (props) => {
   const { t } = useTranslation(undefined, { useSuspense: false })
@@ -28,6 +29,10 @@ const UseServiceLoadedPage = (props) => {
           />
         </Loader>
       </div>
+      <Cart 
+        tooltip={t('Open cart')}
+        closeLabel={t('Close')}
+      />
     </>
   )
 }

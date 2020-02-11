@@ -1,5 +1,6 @@
 {
   "Add to cart": "Dodaj do koszyka",
+  "Open cart": "Otwórz koszyk",
   "Data fetched by browser!": "Pobrano dane po stronie przeglądarki!",
   "Data fetched on server!": "Pobrano dane po stronie serwera!",
   "There is a record with the same value of field that should be unique! Check unique fields!": "Istnieje rekord o takiej samej wartości unikalnego pola! Sprawdź pola które muszą być unikalne!"
