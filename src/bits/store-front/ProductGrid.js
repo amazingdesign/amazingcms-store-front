@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 
 import ProductCard from './ProductCard'
 
-const ProductGrid = ({ products, onCardClick, addToCartClick }) => {
+const ProductGrid = ({ products, onCardClick, addToCartClick, addToCartLabel }) => {
   return (
     <Grid
       container
@@ -28,7 +28,7 @@ const ProductGrid = ({ products, onCardClick, addToCartClick }) => {
               onClick={onCardClick}
               actions={[
                 {
-                  label: 'Add to cart',
+                  label: addToCartLabel || 'Add to cart',
                   icon: 'add_shopping_cart',
                   onClick: (e) => addToCartClick && addToCartClick(e, product),
                 },
@@ -45,6 +45,7 @@ ProductGrid.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   onCardClick: PropTypes.func,
   addToCartClick: PropTypes.func,
+  addToCartLabel: PropTypes.string,
 }
 
 export default ProductGrid

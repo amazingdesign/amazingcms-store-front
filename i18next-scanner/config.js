@@ -4,6 +4,7 @@ const flush = require('./flush')
 
 module.exports = {
   input: [
+    'pages/**/*.{js,jsx}',
     'src/**/*.{js,jsx}',
     '!src/**/*.test.{js,jsx}',
     '!src/i18n/**',

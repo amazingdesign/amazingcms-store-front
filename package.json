@@ -43,6 +43,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "translations": "i18next-scanner --config ./i18next-scanner/config.js",
     "docker": "docker build . -t $(echo $DOCKER_IMAGE_NAME):$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
     "docker:push": "docker push $(echo $DOCKER_IMAGE_NAME):$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
     "docker:deploy": "npm run docker && npm run docker:push"
@@ -61,6 +62,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0",
     "husky": "^4.2.1",
+    "i18next-scanner": "^2.10.3",
     "jest": "^25.1.0"
   },
   "husky": {
