@@ -17,6 +17,10 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          />
 
           {
             this.props.envConfig ?
@@ -62,7 +66,7 @@ MyDocument.getInitialProps = async ctx => {
   try {
     // eslint-disable-next-line no-undef
     envConfig = await axios(`${process.env.SELF_URL}/env-config.js`).then((response) => response.data)
-  } catch (error) { 
+  } catch (error) {
     console.error('Cant load /env-config.js to inline this script! Will be attached in head in <script> tag!')
   }
 

@@ -22,3 +22,6 @@ yarn-error.log*
 .env
 public/env-config.js
 .now
+
+# bit
+/dist/**/*

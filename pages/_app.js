@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import { initStore } from '../src/store'
 
 import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
 
 import DisplayFlashToasts from '@bit/amazingdesign.react-redux-mui-starter.display-flash-toasts'
@@ -34,8 +33,6 @@ class MyApp extends App {
         </Head>
         <Provider store={this.props.store}>
           <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
             <Component {...pageProps} />
             <DisplayFlashToasts />
           </ThemeProvider>

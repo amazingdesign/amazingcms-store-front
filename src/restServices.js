@@ -7,11 +7,16 @@ import { addErrorHandler } from './restServicesErrorHandler'
 import { flashMessage } from 'redux-flash'
 import { i18n } from './i18n'
 
+import { getConfigSSR } from '@bit/amazingdesign.utils.config'
+
+const API_URL = getConfigSSR('REACT_APP_API_URL')
+const PRODUCTS_COLLECTION = getConfigSSR('REACT_APP_PRODUCTS_COLLECTION')
+
 const servicesDeclarations = [
   {
-    name: 'randomusers',
-    url: 'https://randomuser.me/api?results=10',
-    transformer: (data) => data && data.results,
+    name: 'products',
+    url: `${API_URL}/actions/${PRODUCTS_COLLECTION}/:id`,
+    transformer: (data) => data && data.rows,
     actionsDeclarations: crudActionsDeclarations,
     onReceivesData: ({ method, name }, dispatch) => {
       if (['find'].includes(name)) {
