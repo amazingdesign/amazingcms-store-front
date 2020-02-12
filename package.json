@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@bit/amazingdesign.amazingcms.make-downloader-src": "^0.1.0",
+    "@bit/amazingdesign.react-redux-mui-starter.dialog": "0.0.4",
+    "@bit/amazingdesign.react-redux-mui-starter.dialog-with-button": "0.0.4",
     "@bit/amazingdesign.react-redux-mui-starter.display-flash-toasts": "0.0.5",
+    "@bit/amazingdesign.react-redux-mui-starter.flash-success-message": "0.0.1",
     "@bit/amazingdesign.react-redux-mui-starter.i18n": "0.0.7",
     "@bit/amazingdesign.react-redux-mui-starter.icon": "^0.2.1",
     "@bit/amazingdesign.react-redux-mui-starter.make-auth-requests": "0.0.3",
@@ -14,6 +17,7 @@
     "@bit/amazingdesign.redux-rest-services.use-service-loaded": "^0.1.3",
     "@bit/amazingdesign.utils.config": "^1.0.3",
     "@material-ui/core": "^4.9.2",
+    "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "axios-auth-refresh": "^2.2.1",
     "clsx": "latest",
@@ -31,9 +35,8 @@
     "redux": "^4.0.5",
     "redux-flash": "^2.0.2",
     "redux-rest-services": "^0.2.7",
-    "redux-thunk": "^2.3.0",
-    "@bit/amazingdesign.react-redux-mui-starter.dialog": "0.0.4",
-    "@bit/amazingdesign.react-redux-mui-starter.dialog-with-button": "0.0.4"
+    "redux-simple-cart": "0.0.2",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "dev": "chmod +x ./env.sh && bash ./env.sh && mv env-config.js ./public/ && next",

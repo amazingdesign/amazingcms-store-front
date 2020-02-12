@@ -2,7 +2,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
 import { reducer as flashReducer, middleware as flashMiddleware, removeMessage } from 'redux-flash'
-
+import { makeCart } from 'redux-simple-cart'
 import { restServices } from './restServices'
 
 const FLASH_MESSAGES_DEFAULT_TIMEOUT = 5000
@@ -21,6 +21,7 @@ const clearFlashMessagesAfterTimeout = (initialState, store) => {
 export const initStore = (initialState = {}, { isServer }) => {
   const mainReducer = combineReducers({
     flash: flashReducer,
+    cart: makeCart('cart').reducer,
     ...restServices.reducers,
   })
 
