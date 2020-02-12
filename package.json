@@ -10,6 +10,7 @@
     "@bit/amazingdesign.react-redux-mui-starter.flash-success-message": "0.0.1",
     "@bit/amazingdesign.react-redux-mui-starter.i18n": "0.0.7",
     "@bit/amazingdesign.react-redux-mui-starter.icon": "^0.2.1",
+    "@bit/amazingdesign.react-redux-mui-starter.icon-message": "0.0.3",
     "@bit/amazingdesign.react-redux-mui-starter.make-auth-requests": "0.0.3",
     "@bit/amazingdesign.react-redux-mui-starter.make-redux-auth": "0.0.4",
     "@bit/amazingdesign.redux-rest-services.get-service": "0.0.2",
@@ -35,7 +36,7 @@
     "redux": "^4.0.5",
     "redux-flash": "^2.0.2",
     "redux-rest-services": "^0.2.7",
-    "redux-simple-cart": "0.0.2",
+    "redux-simple-cart": "^0.2.1",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

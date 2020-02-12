@@ -1,8 +1,12 @@
 {
+  "$": "zł",
   "Add to cart": "Dodaj do koszyka",
   "Added to cart!": "Dodano do koszyka!",
-  "Open cart": "Otwórz koszyk",
+  "Close": "Zamknij",
   "Data fetched by browser!": "Pobrano dane po stronie przeglądarki!",
   "Data fetched on server!": "Pobrano dane po stronie serwera!",
+  "Empty cart! Add some items!": "Koszyk jest pusty! Dodaj przedmioty!",
+  "Open cart": "Otwórz koszyk",
+  "Pay": "Przejdź do płatności",
   "There is a record with the same value of field that should be unique! Check unique fields!": "Istnieje rekord o takiej samej wartości unikalnego pola! Sprawdź pola które muszą być unikalne!"
 }

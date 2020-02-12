@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { getInstances } from 'redux-simple-cart'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { flashMessage } from 'redux-flash'
 import { flashSuccessMessage } from '@bit/amazingdesign.react-redux-mui-starter.flash-success-message'
 import { getService } from '@bit/amazingdesign.redux-rest-services.get-service'
 import { useServiceLoaded } from '@bit/amazingdesign.redux-rest-services.use-service-loaded'
@@ -26,6 +27,10 @@ const UseServiceLoadedPage = (props) => {
     dispatch(cart.add(product._id, product))
     dispatch(flashSuccessMessage('Added to cart!'))
   }
+  const removeFromCart = (product) => {
+    dispatch(cart.remove(product._id))
+    dispatch(flashMessage('Removed from cart!'))
+  }
 
   return (
     <>
@@ -45,7 +50,12 @@ const UseServiceLoadedPage = (props) => {
       <Cart
         tooltip={t('Open cart')}
         closeLabel={t('Close')}
-        itemsCount={items.length || 0}
+        buttonLabel={t('Pay')}
+        defaultCurrency={t('$')}
+        emptyCartMessage={t('Empty cart! Add some items!')}
+        items={items}
+        addItem={(product) => addToCart({ ...product, quantity: 1 })}
+        removeItem={(product) => removeFromCart(product)}
       />
     </>
   )
