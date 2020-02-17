@@ -1,6 +1,6 @@
 {
   "name": "nextjs",
-  "version": "4.0.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@bit/amazingdesign.amazingcms.make-downloader-src": "^0.1.0",
@@ -8,11 +8,14 @@
     "@bit/amazingdesign.react-redux-mui-starter.dialog-with-button": "0.0.4",
     "@bit/amazingdesign.react-redux-mui-starter.display-flash-toasts": "0.0.5",
     "@bit/amazingdesign.react-redux-mui-starter.flash-success-message": "0.0.1",
-    "@bit/amazingdesign.react-redux-mui-starter.i18n": "0.0.7",
+    "@bit/amazingdesign.react-redux-mui-starter.i18n": "0.0.8",
     "@bit/amazingdesign.react-redux-mui-starter.icon": "^0.2.1",
     "@bit/amazingdesign.react-redux-mui-starter.icon-message": "0.0.3",
+    "@bit/amazingdesign.react-redux-mui-starter.language-select": "0.0.6",
+    "@bit/amazingdesign.react-redux-mui-starter.language-switcher": "0.0.8",
     "@bit/amazingdesign.react-redux-mui-starter.make-auth-requests": "0.0.3",
     "@bit/amazingdesign.react-redux-mui-starter.make-redux-auth": "0.0.4",
+    "@bit/amazingdesign.react-redux-mui-starter.page": "0.0.2",
     "@bit/amazingdesign.redux-rest-services.get-service": "0.0.2",
     "@bit/amazingdesign.redux-rest-services.use-service": "^0.1.1",
     "@bit/amazingdesign.redux-rest-services.use-service-loaded": "^0.1.3",
@@ -29,7 +32,6 @@
     "next-redux-wrapper": "^4.0.1",
     "nextjs-redirect": "^1.1.2",
     "prop-types": "latest",
-    "qs": "^6.9.1",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^7.1.3",
@@ -37,7 +39,9 @@
     "redux-flash": "^2.0.2",
     "redux-rest-services": "^0.2.7",
     "redux-simple-cart": "^0.2.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "uniforms-bridge-json-schema": "^2.6.6",
+    "uniforms-material": "^2.6.6"
   },
   "scripts": {
     "dev": "chmod +x ./env.sh && bash ./env.sh && mv env-config.js ./public/ && next",
@@ -50,8 +54,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "translations": "i18next-scanner --config ./i18next-scanner/config.js",
-    "docker": "docker build . -t $(echo $DOCKER_IMAGE_NAME):$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
-    "docker:push": "docker push $(echo $DOCKER_IMAGE_NAME):$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
+    "docker": "docker build . -t harbor.amazingdesign.eu/amazingcms/store-front:$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
+    "docker:push": "docker push harbor.amazingdesign.eu/amazingcms/store-front:$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)",
     "docker:deploy": "npm run docker && npm run docker:push"
   },
   "bit": {

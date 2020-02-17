@@ -33,7 +33,7 @@ const makeErrorMessage = ({ code, data, message, name, type }) => {
     case 'ENTITY_WITH_THE_SAME_VALUE_EXISTS':
       return t('There is a record with the same value of field that should be unique! Check unique fields!')
     default:
-      return message
+      return t(message)
   }
 }
 

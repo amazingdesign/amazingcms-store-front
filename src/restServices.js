@@ -21,22 +21,12 @@ const servicesDeclarations = [
   {
     name: 'orders',
     url: `${API_URL}/orders/:id`,
-    transformer: (data) => data && data.rows,
-    actionsDeclarations: [
-      {
-        name: 'create',
-        method: 'POST',
-      },
-      {
-        name: 'get',
-        method: 'GET',
-      },
-    ],
+    actionsDeclarations: crudActionsDeclarations,
     onError: ({ method, name }, dispatch) => {
-      dispatch(flashErrorMessage(i18n.t('Failed to create order!')))
+      if (name === 'create') dispatch(flashErrorMessage(i18n.t('Failed to create order!')))
     },
     onReceivesData: ({ method, name }, dispatch) => {
-      dispatch(flashMessage(i18n.t('Order created successfully!')))
+      if (name === 'create') dispatch(flashMessage(i18n.t('Order created successfully!')))
     },
   },
 ]

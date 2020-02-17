@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 import { getInstances } from 'redux-simple-cart'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,16 +19,15 @@ import Cart from '../src/bits/store-front/Cart'
 
 const PRODUCT_FIELDS = ['_id', 'price', 'currency', 'name', 'photo', 'published', 'description']
 
-const UseServiceLoadedPage = ({ collectionName }) => {
+const UseServiceLoadedPage = ({ collectionName, coupon }) => {
   const { t } = useTranslation(undefined, { useSuspense: false })
-  const router = useRouter()
 
   const dispatch = useDispatch()
   const items = useSelector((store) => store.cart.items)
   const [{ actions: cart }] = getInstances()
 
-  const { create: createOrder, getState: getOrderState } = useService('orders')
-  const { Loader, ErrorMessage, data: products } = useServiceLoaded(
+  const { Loader: OrderLoader, create: createOrder, getState: getOrderState } = useService('orders')
+  const { Loader: ProductsLoader, ErrorMessage, data: products } = useServiceLoaded(
     'products',
     {
       globalParams: { collectionName, fields: PRODUCT_FIELDS },
@@ -55,59 +54,65 @@ const UseServiceLoadedPage = ({ collectionName }) => {
     return createOrder({}, { data: { basket } })
       .then(() => {
         const newOrderId = getOrderState('create.rawData._id')
-        router.push(`/summary/${newOrderId}`)
+        Router.push(
+          '/summary/[orderId]',
+          `/summary/${newOrderId}${coupon ? `?coupon=${coupon}` : ''}`
+        )
       })
   }
 
   return (
     <>
-      <div style={{ position: 'relative' }}>
-        <ErrorMessage
-          message={t('Products load failed!')}
-        >
-          <Loader>
-            <ProductGrid
-              products={products && products.map((product) => ({
-                ...product,
-                price: String(product.price),
-                photo: makeSrc('files')(product.photo),
-                collectionName,
-              }))}
-              addToCartClick={(e, product) => addToCart(product)}
-              addToCartLabel={t('Add to cart')}
-            />
-          </Loader>
-        </ErrorMessage>
-      </div>
-      <Cart
-        tooltip={t('Open cart')}
-        closeLabel={t('Close')}
-        buttonLabel={t('Pay')}
-        defaultCurrency={t('$')}
-        emptyCartMessage={t('Empty cart! Add some items!')}
-        items={items}
-        addItem={(product) => addToCart({ ...product, quantity: 1 })}
-        removeItem={(product) => removeFromCart(product)}
-        buttonClick={makeOrder}
-      />
+      <OrderLoader>
+        <div style={{ position: 'relative' }}>
+          <ErrorMessage
+            message={t('Products load failed!')}
+          >
+            <ProductsLoader>
+              <ProductGrid
+                products={products && products.map((product) => ({
+                  ...product,
+                  price: String(product.price),
+                  photo: makeSrc('files')(product.photo),
+                  collectionName,
+                }))}
+                addToCartClick={(e, product) => addToCart(product)}
+                addToCartLabel={t('Add to cart')}
+              />
+            </ProductsLoader>
+          </ErrorMessage>
+        </div>
+        <Cart
+          tooltip={t('Open cart')}
+          closeLabel={t('Close')}
+          buttonLabel={t('Go to summary')}
+          defaultCurrency={t('PLN')}
+          emptyCartMessage={t('Empty cart! Add some items!')}
+          items={items}
+          addItem={(product) => addToCart({ ...product, quantity: 1 })}
+          removeItem={(product) => removeFromCart(product)}
+          buttonClick={makeOrder}
+        />
+      </OrderLoader>
     </>
   )
 }
 
 UseServiceLoadedPage.propTypes = {
   collectionName: PropTypes.string,
+  coupon: PropTypes.string,
 }
 
 UseServiceLoadedPage.getInitialProps = async ({ query, store }) => {
-  const { collectionName } = query
+  const { collectionName, coupon } = query
 
   const { find } = getService(store, 'products', { collectionName })
 
   try {
     const result = await find({ fields: PRODUCT_FIELDS })
-    return { collectionName, result }
+    return { collectionName, coupon, result }
   } catch (error) {
-    return { collectionName, error }
+    return { collectionName, coupon, error }
   }
 }
 

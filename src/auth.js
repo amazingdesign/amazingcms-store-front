@@ -7,10 +7,11 @@ import { getConfigSSR } from '@bit/amazingdesign.utils.config'
 import { makeReduxAuth } from '@bit/amazingdesign.react-redux-mui-starter.make-redux-auth'
 import { makeAuthRequests } from '@bit/amazingdesign.react-redux-mui-starter.make-auth-requests'
 
-const LOG_IN_URL = getConfigSSR('REACT_APP_LOG_IN_URL')
-const REFRESH_TOKEN_URL = getConfigSSR('REACT_APP_REFRESH_TOKEN_URL')
-const FORGOT_PASSWORD_URL = getConfigSSR('REACT_APP_FORGOT_PASSWORD_URL')
-const RESET_PASSWORD_URL = getConfigSSR('REACT_APP_RESET_PASSWORD_URL')
+const API_URL = getConfigSSR('REACT_APP_API_URL')
+const LOG_IN_URL = API_URL + '/auth/logIn'
+const REFRESH_TOKEN_URL = API_URL + '/auth/refreshToken'
+const FORGOT_PASSWORD_URL = API_URL + '/auth/sendForgotPasswordEmail'
+const RESET_PASSWORD_URL = API_URL + '/auth/resetPassword'
 
 const t = i18n.t.bind(i18n)
 
