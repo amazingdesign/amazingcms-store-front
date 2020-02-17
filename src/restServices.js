@@ -4,29 +4,39 @@ import makeRestServices, { crudActionsDeclarations } from 'redux-rest-services'
 import axios from './axios'
 import { addErrorHandler } from './restServicesErrorHandler'
 
-import { flashMessage } from 'redux-flash'
-import { i18n } from './i18n'
-
 import { getConfigSSR } from '@bit/amazingdesign.utils.config'
 
+import { flashMessage, flashErrorMessage } from 'redux-flash'
+import i18n from './i18n'
+
 const API_URL = getConfigSSR('REACT_APP_API_URL')
-const PRODUCTS_COLLECTION = getConfigSSR('REACT_APP_PRODUCTS_COLLECTION')
 
 const servicesDeclarations = [
   {
     name: 'products',
-    url: `${API_URL}/actions/${PRODUCTS_COLLECTION}/:id`,
+    url: `${API_URL}/actions/:collectionName/:id`,
     transformer: (data) => data && data.rows,
     actionsDeclarations: crudActionsDeclarations,
+  },
+  {
+    name: 'orders',
+    url: `${API_URL}/orders/:id`,
+    transformer: (data) => data && data.rows,
+    actionsDeclarations: [
+      {
+        name: 'create',
+        method: 'POST',
+      },
+      {
+        name: 'get',
+        method: 'GET',
+      },
+    ],
+    onError: ({ method, name }, dispatch) => {
+      dispatch(flashErrorMessage(i18n.t('Failed to create order!')))
+    },
     onReceivesData: ({ method, name }, dispatch) => {
-      if (['find'].includes(name)) {
-        dispatch(flashMessage(
-          typeof window === 'undefined' ?
-            i18n.t('Data fetched on server!')
-            :
-            i18n.t('Data fetched by browser!')
-        ))
-      }
+      dispatch(flashMessage(i18n.t('Order created successfully!')))
     },
   },
 ]

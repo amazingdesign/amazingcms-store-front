@@ -6,7 +6,17 @@ import DialogWithButton from '@bit/amazingdesign.react-redux-mui-starter.dialog-
 import CartContent from '../CartContent'
 import CartButton from './CartButton'
 
-const Cart = ({ tooltip, items, closeLabel, removeItem, addItem, buttonLabel, defaultCurrency, emptyCartMessage }) => (
+const Cart = ({
+  tooltip,
+  items,
+  closeLabel,
+  removeItem,
+  addItem,
+  buttonLabel,
+  buttonClick,
+  defaultCurrency,
+  emptyCartMessage,
+}) => (
   <DialogWithButton
     open={false}
     label={'Cart'}
@@ -25,6 +35,7 @@ const Cart = ({ tooltip, items, closeLabel, removeItem, addItem, buttonLabel, de
       buttonLabel={buttonLabel}
       defaultCurrency={defaultCurrency}
       emptyCartMessage={emptyCartMessage}
+      buttonClick={buttonClick}
     />
   </DialogWithButton>
 )
@@ -38,6 +49,7 @@ Cart.propTypes = {
   items: PropTypes.array,
   removeItem: PropTypes.func,
   addItem: PropTypes.func,
+  buttonClick: PropTypes.func,
 }
 
 export default Cart

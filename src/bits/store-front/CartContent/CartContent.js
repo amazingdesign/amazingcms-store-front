@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -16,11 +16,20 @@ import { Add, Remove } from '@material-ui/icons'
 
 import IconMessage from '@bit/amazingdesign.react-redux-mui-starter.icon-message'
 
-const CartContent = ({ items, removeItem, addItem, buttonLabel = 'Pay ', defaultCurrency = '$', emptyCartMessage }) => {
-  const cartTotal = items.reduce(
-    (r, { price, quantity }) => r + price * (quantity || 0),
+const CartContent = ({
+  items,
+  removeItem,
+  addItem,
+  buttonLabel = 'Pay ',
+  buttonClick,
+  defaultCurrency = '$',
+  emptyCartMessage,
+}) => {
+  const cartTotal = useMemo(() => items.reduce(
+    (r, { price, quantity }) => r + price * (quantity || 1),
     0
-  )
+  ), [items])
+
   return (
     items.length < 1 ?
       <IconMessage
@@ -53,12 +62,18 @@ const CartContent = ({ items, removeItem, addItem, buttonLabel = 'Pay ', default
                       label={`${itemTotal} ${displayedCurrency}`}
                       variant={'outlined'}
                     />
-                    <IconButton onClick={() => removeItem(item)}>
-                      <Remove />
-                    </IconButton>
-                    <IconButton onClick={() => addItem(item)}>
-                      <Add />
-                    </IconButton>
+                    {
+                      removeItem &&
+                      <IconButton onClick={() => removeItem(item)}>
+                        <Remove />
+                      </IconButton>
+                    }
+                    {
+                      addItem &&
+                      <IconButton onClick={() => addItem(item)}>
+                        <Add />
+                      </IconButton>
+                    }
                   </ListItemSecondaryAction>
                 </ListItem>
               )
@@ -69,6 +84,7 @@ const CartContent = ({ items, removeItem, addItem, buttonLabel = 'Pay ', default
           variant={'contained'}
           color={'primary'}
           fullWidth={true}
+          onClick={() => buttonClick && buttonClick(items)}
         >
           {buttonLabel} {cartTotal} {defaultCurrency}
         </Button>
@@ -79,6 +95,7 @@ const CartContent = ({ items, removeItem, addItem, buttonLabel = 'Pay ', default
 CartContent.propTypes = {
   items: PropTypes.array,
   removeItem: PropTypes.func,
+  buttonClick: PropTypes.func,
   addItem: PropTypes.func,
   defaultCurrency: PropTypes.string,
   buttonLabel: PropTypes.string,
