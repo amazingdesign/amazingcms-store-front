@@ -55,7 +55,7 @@ const CartContent = ({
     0
   ), [items])
 
-  const displayedTotal = renderCurrency(orderTotal || orderTotal === 0 ? 0 : cartTotalFromItems)
+  const displayedTotal = renderCurrency(orderTotal || (orderTotal === 0 ? 0 : cartTotalFromItems))
 
   return (
     items.length < 1 ?

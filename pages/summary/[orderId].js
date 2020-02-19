@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import dynamic from 'next/dynamic'
 
 import { useTranslation } from 'react-i18next'
 
@@ -24,16 +23,11 @@ import {
   buySchema as schema,
 } from '../../src/buySchema'
 
-const LanguageSwitcher = dynamic(
-  () => import('@bit/amazingdesign.react-redux-mui-starter.language-switcher'),
-  { ssr: false }
-)
-const languages = JSON.parse(getConfigSSR('REACT_APP_LANGUAGES') || '[]')
+const DEFAULT_CURRENCY = getConfigSSR('REACT_APP_DEFAULT_CURRENCY')
+
 const renderCurrency = (value) => String(value.toFixed(2))
 
 const SummaryPage = ({ orderId, couponFromQs }) => {
-  const [showCouponInput, setShowCouponInput] = useState(false)
-
   const { t } = useTranslation(undefined, { useSuspense: false })
 
   const { Loader, ErrorMessage, data: orderData, get: getOrder, update: updateOrder } = useServiceLoaded(
@@ -44,6 +38,8 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
     }
   )
   const { basket, coupon, orderTotal, discountAmount } = (orderData || {})
+  
+  const [showCouponInput, setShowCouponInput] = useState((coupon || couponFromQs) ? true : false)
 
   const makePayment = async ({ buyerEmail, additionalInfo }) => {
     updateOrder({}, { data: { buyerEmail, additionalInfo } })
@@ -64,7 +60,7 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
   }
 
   useEffect(() => {
-    if(couponFromQs && coupon !== couponFromQs){
+    if (couponFromQs && coupon !== couponFromQs) {
       applyCoupon(couponFromQs)
     }
   }, [])
@@ -74,14 +70,6 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
       style={{ maxWidth: 1024, margin: '0 auto' }}
       usePaper={true}
       paperProps={{ style: { position: 'relative' } }}
-      childrenAbove={(
-        <div style={{ display: 'flex', justifyContent: 'flex-end', paddingBottom: '1rem' }}>
-          <LanguageSwitcher
-            noLabel={true}
-            languages={languages.map((language) => ({ ...language, name: t(language.name) }))}
-          />
-        </div>
-      )}
     >
       <ErrorMessage
         actionName={'get'}
@@ -96,7 +84,7 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
           </Typography>
           <CartContent
             items={basket}
-            defaultCurrency={t('PLN')}
+            defaultCurrency={t(DEFAULT_CURRENCY)}
             emptyCartMessage={t('Empty cart! Add some items!')}
             buttonComponent={() => null}
 
@@ -109,14 +97,14 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
                 <>
                   {t('Coupon')} {coupon}
                   <br />
-                  {t('Discount')} {renderCurrency(discountAmount)} {t('PLN')}
+                  {t('Discount')} {renderCurrency(discountAmount)} {t(DEFAULT_CURRENCY)}
                 </>
                 :
                 null
             }
           />
           {
-            showCouponInput || coupon || couponFromQs ?
+            showCouponInput ?
               <>
                 <CouponApplier
                   placeholder={t('Coupon')}

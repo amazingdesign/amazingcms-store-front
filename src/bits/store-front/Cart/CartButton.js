@@ -2,8 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Fab, Tooltip, Badge } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles, styled } from '@material-ui/core/styles'
 import ShoppingCart from '@material-ui/icons/ShoppingCart'
+
+const StyledContainer = styled('div')(theme => ({
+  margin: '0 auto',
+  width: '100%',
+  maxWidth: 1024,
+  position: 'fixed',
+  bottom: 0,
+}))
 
 const StyledBadge = withStyles(theme => ({
   badge: {
@@ -15,27 +23,29 @@ const StyledBadge = withStyles(theme => ({
 }))(Badge)
 
 const CartButton = ({ tooltip, itemsCount, ...otherProps }) => (
-  <Tooltip title={tooltip}>
-    <Fab
-      style={{
-        position: 'absolute',
-        bottom: '1rem',
-        right: '1rem',
-      }}
-      size={'large'}
-      color={'primary'}
-      aria-label={'cart'}
-      {...otherProps}
-    >
-      <StyledBadge
-        invisible={!itemsCount}
-        badgeContent={itemsCount}
-        color={'secondary'}
+  <StyledContainer>
+    <Tooltip title={tooltip}>
+      <Fab
+        style={{
+          position: 'absolute',
+          bottom: '1rem',
+          right: '1rem',
+        }}
+        size={'large'}
+        color={'primary'}
+        aria-label={'cart'}
+        {...otherProps}
       >
-        <ShoppingCart />
-      </StyledBadge>
-    </Fab>
-  </Tooltip>
+        <StyledBadge
+          invisible={!itemsCount}
+          badgeContent={itemsCount}
+          color={'secondary'}
+        >
+          <ShoppingCart />
+        </StyledBadge>
+      </Fab>
+    </Tooltip>
+  </StyledContainer>
 )
 
 CartButton.propTypes = {

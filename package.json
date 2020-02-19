@@ -22,17 +22,18 @@
     "@bit/amazingdesign.utils.config": "^1.0.3",
     "@material-ui/core": "^4.9.2",
     "@material-ui/icons": "^4.9.1",
+    "@svgr/webpack": "^5.1.0",
     "axios": "^0.19.2",
     "axios-auth-refresh": "^2.2.1",
     "clsx": "latest",
     "dotenv": "^8.2.0",
     "lodash": "^4.17.15",
-    "next": "latest",
+    "next": "^9.2.2",
     "next-images": "^1.3.0",
     "next-redux-wrapper": "^4.0.1",
     "nextjs-redirect": "^1.1.2",
-    "prop-types": "latest",
-    "react": "latest",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
     "react-dom": "latest",
     "react-redux": "^7.1.3",
     "redux": "^4.0.5",
@@ -63,7 +64,21 @@
       "compiler": "bit.envs/compilers/react@1.0.5"
     },
     "componentsDefaultDirectory": "src/bits/{name}",
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "overrides": {
+      "*": {
+        "dependencies": {
+          "@material-ui/core": "-",
+          "prop-types": "-",
+          "react": "-"
+        },
+        "peerDependencies": {
+          "@material-ui/core": "^4.9.2",
+          "prop-types": "^15.7.2",
+          "react": "^16.12.0"
+        }
+      }
+    }
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",

@@ -13,7 +13,9 @@ import theme from '../src/theme'
 import DisplayFlashToasts from '@bit/amazingdesign.react-redux-mui-starter.display-flash-toasts'
 import { getConfigSSR } from '@bit/amazingdesign.utils.config'
 
-class MyApp extends App {
+import Layout from '../src/pieces/Layout'
+
+class StoreApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -33,7 +35,9 @@ class MyApp extends App {
         </Head>
         <Provider store={this.props.store}>
           <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
+            <Layout coupon={this.props.router.query.coupon}>
+              <Component {...pageProps} />
+            </Layout>
             <DisplayFlashToasts />
           </ThemeProvider>
         </Provider>
@@ -42,4 +46,4 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(initStore)(MyApp)
+export default withRedux(initStore)(StoreApp)

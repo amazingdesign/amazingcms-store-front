@@ -15,8 +15,6 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import Icon from '@bit/amazingdesign.react-redux-mui-starter.icon'
 
-import box from './box.svg'
-
 const useStyles = makeStyles({
   root: {
     width: 300,
@@ -43,7 +41,7 @@ const useStyles = makeStyles({
   },
 })
 
-const ProductCard = ({ image, name, price, currency, description, actions, onClick, placeholder = box }) => {
+const ProductCard = ({ image, name, price, currency, description, actions, onClick, placeholder }) => {
   const classes = useStyles()
   const priceTag = `${price === undefined ? '' : String(price)} ${currency === undefined ? '' : String(currency)}`
 

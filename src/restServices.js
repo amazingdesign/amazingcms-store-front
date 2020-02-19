@@ -42,9 +42,14 @@ const fetchFunction = (...all) => (
     })
 )
 
-export const restServices = makeRestServices(
-  restServicesDeclarationsWithErrorHandlers,
-  fetchFunction
+export const restServices = (
+  // fixes problem with NextJS automatic prerendering and envs
+  /// https://github.com/zeit/next.js/issues/8014
+  process.env.NEXT_PHASE !== 'phase-production-build' &&
+  makeRestServices(
+    restServicesDeclarationsWithErrorHandlers,
+    fetchFunction
+  )
 )
 
 export default restServices

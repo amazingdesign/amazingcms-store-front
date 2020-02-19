@@ -26,7 +26,7 @@ const OrderForm = ({ schema, onSubmit, onChange, submitButton }) => {
       onChange={onChange}
       schema={bridge}
       showInlineError={true}
-      // errorsField={() => null}
+      errorsField={() => null}
       submitField={submitButton}
     />
   )
