@@ -8,9 +8,11 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart'
 const StyledContainer = styled('div')(theme => ({
   margin: '0 auto',
   width: '100%',
-  maxWidth: 1024,
+  maxWidth: 1200,
   position: 'fixed',
   bottom: 0,
+  left: '50%',
+  transform: 'translateX(-50%)',
 }))
 
 const StyledBadge = withStyles(theme => ({

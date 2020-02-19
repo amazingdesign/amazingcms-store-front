@@ -15,7 +15,10 @@ const servicesDeclarations = [
   {
     name: 'products',
     url: `${API_URL}/actions/:collectionName/:id`,
-    transformer: (data) => data && data.rows,
+    transformer: (data, { method, name }) => {
+      if (name === 'find') return data && data.rows
+      return data
+    },
     actionsDeclarations: crudActionsDeclarations,
   },
   {

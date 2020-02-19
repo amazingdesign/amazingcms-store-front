@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -17,10 +18,10 @@ import Icon from '@bit/amazingdesign.react-redux-mui-starter.icon'
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: (props) => props.fullScreen ? '100%' : 300,
   },
   media: {
-    height: 180,
+    height: (props) => props.fullScreen ? 400 : 180,
   },
   description: {
     height: 60,
@@ -37,53 +38,80 @@ const useStyles = makeStyles({
     fontSize: '1rem',
   },
   actions: {
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
 })
 
-const ProductCard = ({ image, name, price, currency, description, actions, onClick, placeholder }) => {
-  const classes = useStyles()
+const ProductCard = ({
+  id,
+  image,
+  name,
+  price,
+  currency,
+  description,
+  content,
+  actions,
+  onClick,
+  placeholder,
+  fullScreen,
+  displayDescription = true,
+  children,
+}) => {
+  const classes = useStyles({ fullScreen })
   const priceTag = `${price === undefined ? '' : String(price)} ${currency === undefined ? '' : String(currency)}`
+
+  const CardActionAreaComponent = fullScreen ? React.Fragment : CardActionArea
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionAreaComponent
+        onClick={() => onClick && onClick(id)}
+      >
         <CardMedia
           className={classes.media}
           image={image || placeholder}
           title={name}
-          onClick={onClick}
         />
         <CardContent>
-          <Typography noWrap={true} gutterBottom variant="h5" component="h2">
+          <Typography noWrap={true} gutterBottom variant={'h5'} component={'h2'}>
             {name}
           </Typography>
-          <Typography className={classes.description} variant="body2" color="textSecondary" component="p">
-            {description}
-          </Typography>
+          {
+            displayDescription ?
+              <>
+                <Typography variant={'body2'} color={'textSecondary'} component={'div'}>
+                  {content}
+                </Typography>
+                <Typography className={classes.description} variant={'body2'} color={'textSecondary'} component={'p'}>
+                  {description}
+                </Typography>
+              </>
+              :
+              children
+          }
+          {children}
         </CardContent>
-      </CardActionArea>
+      </CardActionAreaComponent>
       <CardActions className={classes.actions}>
         {
-          actions && actions.map(({ label, onClick, icon }, i) => (
+          actions && actions.map(({ label, onClick, icon, addPriceTag }, i) => (
             <Button
               className={classes.button}
               key={i}
-              size="small"
-              color="primary"
+              size={'small'}
+              color={'primary'}
               onClick={onClick}
             >
               {
                 icon ?
                   <Tooltip title={label}>
                     <span className={classes.buttonWithIcon}>
-                      {priceTag}
-                      {' '}
+                      {addPriceTag ? `${priceTag} ` : ''}
                       <Icon>{icon}</Icon>
                     </span>
                   </Tooltip>
                   :
-                  `${priceTag} ${label}`
+                  `${addPriceTag ? `${priceTag} ` : ''}${label}`
               }
             </Button>
           ))
@@ -94,12 +122,23 @@ const ProductCard = ({ image, name, price, currency, description, actions, onCli
 }
 
 ProductCard.propTypes = {
+  children: PropTypes.node,
+  displayDescription: PropTypes.bool,
+  fullScreen: PropTypes.bool,
   onClick: PropTypes.func,
+  id: PropTypes.string,
   image: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
   description: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   currency: PropTypes.string,
   actions: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,

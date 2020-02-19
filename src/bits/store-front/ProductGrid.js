@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 
 import ProductCard from './ProductCard'
 
-const ProductGrid = ({ products, onCardClick, addToCartClick, addToCartLabel, placeholder }) => {
+const ProductGrid = ({ products, onCardClick, addToCartClick, addToCartLabel, placeholder, productCardProps }) => {
   return (
     <Grid
       container
@@ -20,6 +20,7 @@ const ProductGrid = ({ products, onCardClick, addToCartClick, addToCartLabel, pl
             key={product._id}
           >
             <ProductCard
+              id={product._id}
               image={product.photo}
               name={product.name}
               price={product.price}
@@ -29,11 +30,13 @@ const ProductGrid = ({ products, onCardClick, addToCartClick, addToCartLabel, pl
               placeholder={placeholder}
               actions={[
                 {
+                  addPriceTag: true,
                   label: addToCartLabel || 'Add to cart',
                   icon: 'add_shopping_cart',
                   onClick: (e) => addToCartClick && addToCartClick(e, product),
                 },
               ]}
+              {...productCardProps}
             />
           </Grid>
         ))
@@ -48,6 +51,7 @@ ProductGrid.propTypes = {
   addToCartClick: PropTypes.func,
   addToCartLabel: PropTypes.string,
   placeholder: PropTypes.string,
+  productCardProps: PropTypes.object,
 }
 
 export default ProductGrid

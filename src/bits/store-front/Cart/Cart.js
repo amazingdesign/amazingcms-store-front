@@ -21,7 +21,7 @@ const Cart = ({
     open={false}
     label={'Cart'}
     dialogProps={{ closeLabel }}
-    closeDialogProp={'onClose'}
+    closeDialogProp={'buttonClick'}
     buttonComponent={({ fullWidth, ...otherProps }) => <CartButton
       itemsCount={items.length || 0}
       tooltip={tooltip}
