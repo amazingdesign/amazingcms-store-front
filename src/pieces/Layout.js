@@ -118,7 +118,9 @@ const Layout = ({ children, coupon }) => {
         }
       </div>
       <div style={{ position: 'relative' }}>
-        <OrderLoader>
+        <OrderLoader
+          actionName={'create'}
+        >
           {children}
         </OrderLoader>
       </div>
