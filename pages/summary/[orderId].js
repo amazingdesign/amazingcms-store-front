@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core'
 
+import { makeSrc } from '@bit/amazingdesign.amazingcms.make-downloader-src'
 import { getConfigSSR } from '@bit/amazingdesign.utils.config'
 import { getService } from '@bit/amazingdesign.redux-rest-services.get-service'
 import { useServiceLoaded } from '@bit/amazingdesign.redux-rest-services.use-service-loaded'
@@ -83,7 +84,10 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
             {t('ID')} - {orderId}
           </Typography>
           <CartContent
-            items={basket}
+            items={basket && basket.map && basket.map((product) => ({
+              ...product,
+              photo: makeSrc('files')(product.photo),
+            }))}
             defaultCurrency={t(DEFAULT_CURRENCY)}
             emptyCartMessage={t('Empty cart! Add some items!')}
             buttonComponent={() => null}

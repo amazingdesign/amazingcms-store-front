@@ -60,7 +60,7 @@ const ProductCard = ({
   const classes = useStyles({ fullScreen })
   const priceTag = `${price === undefined ? '' : String(price)} ${currency === undefined ? '' : String(currency)}`
 
-  const CardActionAreaComponent = fullScreen ? React.Fragment : CardActionArea
+  const CardActionAreaComponent = fullScreen ? 'div' : CardActionArea
 
   return (
     <Card className={classes.root}>
