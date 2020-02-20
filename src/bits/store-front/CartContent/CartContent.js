@@ -20,16 +20,45 @@ import IconMessage from '@bit/amazingdesign.react-redux-mui-starter.icon-message
 
 const renderCurrency = (value) => String(value.toFixed(2))
 
-const styles = {
-  listItem: { paddingLeft: 0, paddingRight: 0 },
-  avatar: { borderRadius: 0 },
-  secondaryAction: { right: 0 },
-}
 const useStyles = makeStyles((theme) => ({
-  '@media(max-width: 400px)': {
-    hideAvatarOnSmallMobile: {
+  avatar: { borderRadius: 0 },
+  secondaryAction: {
+    backgroundColor: theme.palette.background.default,
+    right: 0,
+    [theme.breakpoints.down('xs')]: {
+      position: 'static',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      transform: 'none',
+    },
+  },
+  summarySecondaryAction: {
+    backgroundColor: theme.palette.background.default,
+    right: 0,
+  },
+  listItem: {
+    paddingLeft: 0,
+    paddingRight: 0,
+    overflow: 'hidden',
+  },
+  summaryListItem: {
+    marginTop: '1.5rem',
+    marginBottom: '0.5rem',
+  },
+  hideAvatarOnSmallMobile: {
+    [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
+  },
+  showAvatarOnSmallMobile: {
+    display: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'initial',
+    },
+  },
+  button: {
+    marginTop: '1.5rem',
   },
 }))
 
@@ -74,40 +103,49 @@ const CartContent = ({
               return (
                 <ListItem
                   key={id}
-                  style={styles.listItem}
+                  className={classes.listItem}
                 >
                   <ListItemAvatar className={classes.hideAvatarOnSmallMobile}>
                     <Avatar
-                      style={styles.avatar}
+                      className={classes.avatar}
                       src={photo}
                       alt={`${name}`}
                     />
                   </ListItemAvatar>
                   <ListItemText
-                    primaryTypographyProps={{ noWrap: true }}
-                    secondaryTypographyProps={{ noWrap: true }}
+                    primaryTypographyProps={{ noWrap: true, component: 'p' }}
+                    secondaryTypographyProps={{ noWrap: true, component: 'p' }}
                     primary={`${name}`}
                     secondary={
                       `${price}${quantity > 1 ? ` x ${quantity} = ${itemTotal}` : ''} ${displayedCurrency}`
                     }
                   />
-                  <ListItemSecondaryAction style={styles.secondaryAction}>
-                    <Chip
-                      label={`${itemTotal} ${displayedCurrency}`}
-                      variant={'outlined'}
-                    />
-                    {
-                      removeItem &&
-                      <IconButton onClick={() => removeItem(item)}>
-                        <Remove />
-                      </IconButton>
-                    }
-                    {
-                      addItem &&
-                      <IconButton onClick={() => addItem(item)}>
-                        <Add />
-                      </IconButton>
-                    }
+                  <ListItemSecondaryAction className={classes.secondaryAction}>
+                    <ListItemAvatar className={classes.showAvatarOnSmallMobile}>
+                      <Avatar
+                        className={classes.avatar}
+                        src={photo}
+                        alt={`${name}`}
+                      />
+                    </ListItemAvatar>
+                    <div>
+                      {
+                        addItem &&
+                        <IconButton onClick={() => addItem(item)}>
+                          <Add />
+                        </IconButton>
+                      }
+                      {
+                        removeItem &&
+                        <IconButton onClick={() => removeItem(item)}>
+                          <Remove />
+                        </IconButton>
+                      }
+                      <Chip
+                        label={`${itemTotal} ${displayedCurrency}`}
+                        variant={'outlined'}
+                      />
+                    </div>
                   </ListItemSecondaryAction>
                 </ListItem>
               )
@@ -116,7 +154,7 @@ const CartContent = ({
                 displaySummary ?
                   <ListItem
                     key={`summary-${displayedTotal}-${summaryPrimaryText}-${summarySecondaryText}`}
-                    style={styles.listItem}
+                    className={classes.listItem + ' ' + classes.summaryListItem}
                   >
                     <ListItemText
                       primaryTypographyProps={{ noWrap: true }}
@@ -124,7 +162,7 @@ const CartContent = ({
                       primary={summaryPrimaryText}
                       secondary={summarySecondaryText}
                     />
-                    <ListItemSecondaryAction style={styles.secondaryAction}>
+                    <ListItemSecondaryAction className={classes.summarySecondaryAction}>
                       <Chip
                         color={'primary'}
                         label={`${displayedTotal} ${defaultCurrency}`}
@@ -144,6 +182,7 @@ const CartContent = ({
             />
             :
             <Button
+              className={classes.button}
               variant={'contained'}
               color={'primary'}
               fullWidth={true}
