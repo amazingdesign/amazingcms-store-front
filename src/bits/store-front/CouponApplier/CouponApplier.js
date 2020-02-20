@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import InputWithButton from '../../react-redux-starter/InputWithButton'
+import InputWithButton from '@bit/amazingdesign.react-redux-mui-starter.input-with-button'
 
 import { useTheme } from '@material-ui/core/styles'
 

@@ -87,7 +87,7 @@ const ProductCard = ({
                 </Typography>
               </>
               :
-              children
+              null
           }
           {children}
         </CardContent>

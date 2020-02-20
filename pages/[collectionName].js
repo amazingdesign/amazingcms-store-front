@@ -17,7 +17,14 @@ import Page from '@bit/amazingdesign.react-redux-mui-starter.page'
 
 import ProductGrid from '../src/bits/store-front/ProductGrid'
 
-const PRODUCT_FIELDS = ['_id', 'price', 'currency', 'name', 'photo', 'published', 'description']
+const PRODUCTS_FIELDS = (
+  JSON.parse(getConfigSSR('REACT_APP_PRODUCTS_FIELDS') || 'null') ||
+  ['_id', 'price', 'currency', 'name', 'photo', 'published', 'description']
+)
+const PRODUCTS_QUERY = (
+  JSON.parse(getConfigSSR('REACT_APP_PRODUCTS_QUERY') || 'null') ||
+  { published: 'true' }
+)
 const PRODUCT_PLACEHOLDER = getConfigSSR('REACT_APP_PRODUCT_PLACEHOLDER')
 const DEFAULT_CURRENCY = getConfigSSR('REACT_APP_DEFAULT_CURRENCY')
 
@@ -31,7 +38,7 @@ const UseServiceLoadedPage = ({ collectionName, coupon }) => {
   const { Loader: ProductsLoader, ErrorMessage, data: products } = useServiceLoaded(
     'products',
     {
-      globalParams: { collectionName, fields: PRODUCT_FIELDS },
+      globalParams: { collectionName, fields: PRODUCTS_FIELDS, query: PRODUCTS_QUERY },
       doNotLoadOnMount: true,
     }
   )
@@ -91,7 +98,7 @@ UseServiceLoadedPage.getInitialProps = async ({ query, store }) => {
   const { find } = getService(store, 'products', { collectionName })
 
   try {
-    const result = await find({ fields: PRODUCT_FIELDS })
+    const result = await find({ fields: PRODUCTS_FIELDS, query: PRODUCTS_QUERY })
     return { collectionName, coupon, result }
   } catch (error) {
     return { collectionName, coupon, error }
