@@ -1,11 +1,10 @@
 /* eslint-disable max-lines */
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
 
 import { useTranslation } from 'react-i18next'
 
@@ -18,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { flashSuccessMessage } from '@bit/amazingdesign.react-redux-mui-starter.flash-success-message'
 import { getConfigSSR } from '@bit/amazingdesign.utils.config'
 import { useService } from '@bit/amazingdesign.redux-rest-services.use-service'
+import RouteLoader from '@bit/amazingdesign.react-redux-mui-starter.loading-indictor'
 
 import Cart from '../bits/store-front/Cart'
 
@@ -59,6 +59,8 @@ const Layout = ({ children, coupon }) => {
   const router = useRouter()
   const classes = useStyles()
 
+  const [isRouteLoading, setRouteLoading] = useState(false)
+
   const items = useSelector((store) => store.cart.items)
   const [{ actions: cart }] = getInstances()
 
@@ -90,6 +92,18 @@ const Layout = ({ children, coupon }) => {
       })
   }
 
+  useEffect(() => {
+    router.events.on('routeChangeStart', url => {
+      setRouteLoading(true)
+    })
+    router.events.on('routeChangeComplete', () => {
+      setRouteLoading(false)
+    })
+    router.events.on('routeChangeError', () => {
+      setRouteLoading(false)
+    })
+  }, [])
+
   return (
     <>
       <div className={classes.navbar}>
@@ -118,6 +132,12 @@ const Layout = ({ children, coupon }) => {
         }
       </div>
       <div style={{ position: 'relative' }}>
+        {
+          isRouteLoading ?
+            <RouteLoader />
+            :
+            null
+        }
         <OrderLoader
           actionName={'create'}
         >

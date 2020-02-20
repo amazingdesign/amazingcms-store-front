@@ -14,8 +14,10 @@
     "@bit/amazingdesign.react-redux-mui-starter.input-with-button": "0.0.1",
     "@bit/amazingdesign.react-redux-mui-starter.language-select": "0.0.6",
     "@bit/amazingdesign.react-redux-mui-starter.language-switcher": "0.0.8",
+    "@bit/amazingdesign.react-redux-mui-starter.loading-indictor": "0.0.4",
     "@bit/amazingdesign.react-redux-mui-starter.make-auth-requests": "0.0.3",
     "@bit/amazingdesign.react-redux-mui-starter.make-redux-auth": "0.0.4",
+    "@bit/amazingdesign.react-redux-mui-starter.mui-markdown": "0.0.3",
     "@bit/amazingdesign.react-redux-mui-starter.page": "0.0.2",
     "@bit/amazingdesign.react-redux-mui-starter.read-only-drat-editor": "0.0.1",
     "@bit/amazingdesign.redux-rest-services.get-service": "0.0.2",
@@ -48,8 +50,7 @@
     "redux-simple-cart": "^0.2.1",
     "redux-thunk": "^2.3.0",
     "uniforms-bridge-json-schema": "^2.6.6",
-    "uniforms-material": "^2.6.6",
-    "@bit/amazingdesign.react-redux-mui-starter.mui-markdown": "0.0.3"
+    "uniforms-material": "^2.6.6"
   },
   "scripts": {
     "dev": "chmod +x ./env.sh && bash ./env.sh && mv env-config.js ./public/ && next",
