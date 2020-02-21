@@ -1,6 +1,6 @@
 {
   "name": "nextjs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "@bit/amazingdesign.amazingcms.make-downloader-src": "^0.1.0",
