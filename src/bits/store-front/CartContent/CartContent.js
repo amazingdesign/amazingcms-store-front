@@ -16,6 +16,7 @@ import {
 import { Add, Remove } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
+import OrderForm from '../OrderForm'
 import IconMessage from '@bit/amazingdesign.react-redux-mui-starter.icon-message'
 
 const renderCurrency = (value) => String(value.toFixed(2))
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CartContent = ({
+  schema,
   items,
   removeItem,
   addItem,
@@ -175,27 +177,31 @@ const CartContent = ({
               )
           }
         </List>
-        {
-          ButtonComponent ?
-            <ButtonComponent
-              onClick={() => buttonClick && buttonClick(items)}
-            />
-            :
-            <Button
-              className={classes.button}
-              variant={'contained'}
-              color={'primary'}
-              fullWidth={true}
-              onClick={() => buttonClick && buttonClick(items)}
-            >
-              {buttonLabel} {displayedTotal} {defaultCurrency}
-            </Button>
-        }
+        <OrderForm
+          schema={schema || {}}
+          onSubmit={(formData) => buttonClick && buttonClick(items, formData)}
+          submitButton={() => (
+            ButtonComponent ?
+              <ButtonComponent type={'submit'} />
+              :
+              <Button
+                type={'submit'}
+                className={classes.button}
+                variant={'contained'}
+                color={'primary'}
+                fullWidth={true}
+              >
+                {buttonLabel} {displayedTotal} {defaultCurrency}
+              </Button>
+
+          )}
+        />
       </>
   )
 }
 
 CartContent.propTypes = {
+  schema: PropTypes.object,
   items: PropTypes.array,
   removeItem: PropTypes.func,
   buttonClick: PropTypes.func,

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -13,10 +12,10 @@ const StyledAutoForm = styled(AutoForm)({
     fontSize: '0.8rem',
     marginLeft: 12,
     textIndent: -8,
-  }
+  },
 })
 
-const OrderForm = ({ schema, onSubmit, onChange, submitButton }) => {
+const OrderForm = ({ schema, model, onSubmit, onChange, submitButton }) => {
   const schemaValidator = createValidator(schema)
   const bridge = new JSONSchemaBridge(schema, schemaValidator)
 
@@ -25,6 +24,7 @@ const OrderForm = ({ schema, onSubmit, onChange, submitButton }) => {
       onSubmit={onSubmit}
       onChange={onChange}
       schema={bridge}
+      model={model}
       showInlineError={true}
       errorsField={() => null}
       submitField={submitButton}
@@ -33,7 +33,9 @@ const OrderForm = ({ schema, onSubmit, onChange, submitButton }) => {
 }
 
 OrderForm.propTypes = {
-  isShortForm: PropTypes.bool,
+  submitButton: PropTypes.func,
+  schema: PropTypes.object,
+  model: PropTypes.object,
   onSubmit: PropTypes.func,
   onChange: PropTypes.func,
 }

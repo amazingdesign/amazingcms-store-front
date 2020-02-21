@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = ({
   tooltip,
+  schema,
   items,
   closeLabel,
   removeItem,
@@ -50,6 +51,7 @@ const Cart = ({
       )}
     >
       <CartContent
+        schema={schema}
         items={items}
         removeItem={removeItem}
         addItem={addItem}
@@ -68,6 +70,7 @@ Cart.propTypes = {
   buttonLabel: PropTypes.string,
   defaultCurrency: PropTypes.string,
   emptyCartMessage: PropTypes.string,
+  schema: PropTypes.object,
   items: PropTypes.array,
   removeItem: PropTypes.func,
   addItem: PropTypes.func,

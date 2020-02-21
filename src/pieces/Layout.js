@@ -21,6 +21,8 @@ import RouteLoader from '@bit/amazingdesign.react-redux-mui-starter.loading-indi
 
 import Cart from '../bits/store-front/Cart'
 
+import cartSchema from '../cartSchema'
+
 const useStyles = makeStyles({
   navbar: {
     maxWidth: 1200,
@@ -75,19 +77,19 @@ const Layout = ({ children, coupon }) => {
     dispatch(flashMessage(t('Removed from cart!')))
   }
 
-  const makeOrder = (items) => {
+  const makeOrder = (items, { buyerEmail }) => {
     const basket = items.map((item) => ({
       id: item.id,
       collectionName: item.collectionName,
       quantity: item.quantity,
     }))
 
-    return createOrder({}, { data: { basket } })
+    return createOrder({}, { data: { basket, buyerEmail } })
       .then(() => {
         const newOrderId = getOrderState('create.rawData._id')
         router.push(
-          { pathname: '/summary/[orderId]', query: coupon ? { coupon } : {} },
-          `/summary/${newOrderId}${coupon ? `?coupon=${coupon}` : ''}`
+          { pathname: '/summary/[orderId]', query: coupon ? { coupon, buyerEmail } : { buyerEmail } },
+          `/summary/${newOrderId}?buyerEmail=${buyerEmail}${coupon ? `&coupon=${coupon}` : ''}`
         )
       })
   }
@@ -145,6 +147,7 @@ const Layout = ({ children, coupon }) => {
         </OrderLoader>
       </div>
       <Cart
+        schema={cartSchema(t)}
         tooltip={t('Open cart')}
         closeLabel={t('Close')}
         buttonLabel={t('Go to summary')}

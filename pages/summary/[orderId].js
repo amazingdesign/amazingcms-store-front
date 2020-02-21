@@ -28,7 +28,7 @@ const DEFAULT_CURRENCY = getConfigSSR('REACT_APP_DEFAULT_CURRENCY')
 
 const renderCurrency = (value) => String(value.toFixed(2))
 
-const SummaryPage = ({ orderId, couponFromQs }) => {
+const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs }) => {
   const { t } = useTranslation(undefined, { useSuspense: false })
 
   const { Loader, ErrorMessage, data: orderData, get: getOrder, update: updateOrder } = useServiceLoaded(
@@ -39,7 +39,7 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
     }
   )
   const { basket, coupon, orderTotal, discountAmount } = (orderData || {})
-  
+
   const [showCouponInput, setShowCouponInput] = useState((coupon || couponFromQs) ? true : false)
 
   const makePayment = async ({ buyerEmail, additionalInfo }) => {
@@ -126,6 +126,7 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
             {t('Billing address')}
           </Typography>
           <OrderForm
+            model={{ buyerEmail: buyerEmailFromQs }}
             schema={schema(t)}
             onSubmit={makePayment}
             submitButton={(props) => (
@@ -149,18 +150,19 @@ const SummaryPage = ({ orderId, couponFromQs }) => {
 SummaryPage.propTypes = {
   orderId: PropTypes.string.isRequired,
   couponFromQs: PropTypes.string,
+  buyerEmailFromQs: PropTypes.string,
 }
 
 SummaryPage.getInitialProps = async ({ query, store }) => {
-  const { orderId, coupon: couponFromQs } = query
+  const { orderId, coupon: couponFromQs, buyerEmail: buyerEmailFromQs } = query
 
   const { get } = getService(store, 'orders')
 
   try {
     await get({ id: orderId, populate: ['basket'] })
-    return { orderId, couponFromQs }
+    return { orderId, couponFromQs, buyerEmailFromQs }
   } catch (error) {
-    return { orderId, couponFromQs, error }
+    return { orderId, couponFromQs, buyerEmailFromQs, error }
   }
 }
 
