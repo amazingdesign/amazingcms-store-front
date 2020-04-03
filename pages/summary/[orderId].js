@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import {
   Button,
   Typography,
+  Link,
 } from '@material-ui/core'
 
 import { makeSrc } from '@bit/amazingdesign.amazingcms.make-downloader-src'
@@ -25,6 +26,7 @@ import {
 } from '../../src/buySchema'
 
 const DEFAULT_CURRENCY = getConfigSSR('REACT_APP_DEFAULT_CURRENCY')
+const REGS = JSON.parse(getConfigSSR('REACT_APP_REGS') || '[]')
 
 const renderCurrency = (value) => String(value.toFixed(2))
 
@@ -130,15 +132,34 @@ const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs }) => {
             schema={schema(t)}
             onSubmit={makePayment}
             submitButton={(props) => (
-              <Button
-                variant={'contained'}
-                color={'primary'}
-                fullWidth={true}
-                type={'submit'}
-                {...props}
-              >
-                {t('Pay')} {orderData.orderTotal} {t('PLN')}
-              </Button>
+              <>
+                {
+                  REGS && REGS.map((reg, index) => (
+                    <span key={index}>
+                      <Link
+                        href={reg.link}
+                        target={'_blank'}
+                        rel={'noopener noreferrer'}
+                        variant={'body1'}
+                      >
+                        {reg.label}
+                      </Link>
+                      {' '}
+                    </span>
+                  ))
+                }
+                <br />
+                <br />
+                <Button
+                  variant={'contained'}
+                  color={'primary'}
+                  fullWidth={true}
+                  type={'submit'}
+                  {...props}
+                >
+                  {t('Pay')} {orderData.orderTotal} {t('PLN')}
+                </Button>
+              </>
             )}
           />
         </Loader>

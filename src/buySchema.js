@@ -53,20 +53,13 @@ const consentsMarketingProps = (t, { marketingRequired }) => ({
     },
   },
 })
-const consentsRequired = (t) => ['consentData', 'consentRegulations']
+const consentsRequired = (t) => ['consentData']
 const consentsRequiredProps = (t) => ({
   consentData: {
     type: 'boolean',
     errorMessage: t('Your consent is required!'),
     uniforms: {
-      label: `* ${t('I consent to the processing of my personal data by the Amazing Company Sp. z o.o. (Nowa 8, 21-007, Mełgiew, VAT ID: PL7123301205, REGON: 362666508) described in the Regulations and Privacy Policy available below, in particular for the purposes of providing access to the online course via the platform located under the domain coderoad.pl, by sending messages via e-mail to the e-mail address provided, as well as address details for administrative, billing and accounting purposes.')}'`,
-    },
-  },
-  consentRegulations: {
-    type: 'boolean',
-    errorMessage: t('Your consent is required!'),
-    uniforms: {
-      label: `* ${t('I consent to all conditions specified in the Regulations and Privacy Policy, that are listed below, and accepts all of them')}`,
+      label: `* ${t('I consent to all conditions specified in the Regulations and Privacy Policy, that are listed below, and accepts all of them. Especially I consent to the processing of my personal data by the Amazing Company Sp. z o.o. (Nowa 8, 21-007, Mełgiew, VAT ID: PL7123301205, REGON: 362666508) described in the Regulations and Privacy Policy available below, in particular for the purposes of providing access to the online course via the platform located under the domain coderoad.pl, by sending messages via e-mail to the e-mail address provided, as well as address details for administrative, billing and accounting purposes.')}`,
     },
   },
 })
