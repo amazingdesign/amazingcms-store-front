@@ -64,43 +64,48 @@ const ProductPage = ({ collectionName, productId, coupon }) => {
     <Page
       style={{ maxWidth: 1024, margin: '0 auto' }}
     >
-      <ErrorMessage>
+      <ErrorMessage
+        message={t('Product load failed!')}
+      >
         <Loader>
-          <ProductCard
-            id={product._id}
-            image={makeSrc('files')(product.photo)}
-            name={product.name}
-            price={product.price}
-            currency={product.currency}
-            displayDescription={false}
+          {
+            product &&
+            <ProductCard
+              id={product._id}
+              image={makeSrc('files')(product.photo)}
+              name={product.name}
+              price={product.price}
+              currency={product.currency}
+              displayDescription={false}
 
-            fullScreen={true}
-            actions={[
+              fullScreen={true}
+              actions={[
+                {
+                  label: t('Go back'),
+                  icon: 'keyboard_backspace',
+                  onClick: goBack,
+                },
+                {
+                  addPriceTag: true,
+                  label: t('Add to cart'),
+                  icon: 'add_shopping_cart',
+                  onClick: () => addToCart(product),
+                },
+              ]}
+            >
               {
-                label: t('Go back'),
-                icon: 'keyboard_backspace',
-                onClick: goBack,
-              },
-              {
-                addPriceTag: true,
-                label: t('Add to cart'),
-                icon: 'add_shopping_cart',
-                onClick: () => addToCart(product),
-              },
-            ]}
-          >
-            {
-              product.content ?
-                typeof product.content !== 'string' ?
-                  <ReadOnlyEditor content={product.content} />
+                product.content ?
+                  typeof product.content !== 'string' ?
+                    <ReadOnlyEditor content={product.content} />
+                    :
+                    <MUIMarkdown>
+                      {product.content}
+                    </MUIMarkdown>
                   :
-                  <MUIMarkdown>
-                    {product.content}
-                  </MUIMarkdown>
-                :
-                null
-            }
-          </ProductCard>
+                  null
+              }
+            </ProductCard>
+          }
         </Loader>
       </ErrorMessage>
     </Page>

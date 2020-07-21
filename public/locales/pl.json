@@ -47,5 +47,6 @@
   "You must enter your full name!": "Wpisz imię i nazwisko!",
   "You must enter your street and building/apartment number": "Wpisz ulicę i nr domu/mieszkania",
   "Your consent is required!": "Zgoda jest wymagana",
-  "ZIP code": "Kod pocztowy"
+  "ZIP code": "Kod pocztowy",
+  "Not found": "Nie znaleziono"
 }

@@ -124,7 +124,7 @@ const CartPage = ({ productId, collectionName, couponFromQs, buyerEmailFromQs })
               <CartContent
                 items={basketPopulated && basketPopulated.map && basketPopulated.map((product) => ({
                   ...product,
-                  photo: makeSrc('files')(product.photo),
+                  photo: product && makeSrc('files')(product.photo),
                 }))}
                 defaultCurrency={t(DEFAULT_CURRENCY)}
                 emptyCartMessage={t('Empty cart! Add some items!')}
