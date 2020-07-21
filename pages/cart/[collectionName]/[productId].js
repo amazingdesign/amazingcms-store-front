@@ -119,7 +119,7 @@ const CartPage = ({ productId, collectionName, couponFromQs, buyerEmailFromQs })
           <Loader>
             <OrderLoader>
               <Typography variant={'h6'}>
-                {t('Order summary')}
+                {t('Chosen products')}
               </Typography>
               <CartContent
                 items={basketPopulated && basketPopulated.map && basketPopulated.map((product) => ({

@@ -49,7 +49,7 @@ const consentsMarketingProps = (t, { marketingRequired }) => ({
     type: 'boolean',
     errorMessage: t('Your consent is required!'),
     uniforms: {
-      label: `${marketingRequired ? '* ' : '- '}${t('I consent to the processing of my personal data by the Amazing Company Sp. z o.o. (Nowa 8, 21-007, Mełgiew, VAT ID: PL7123301205, REGON: 362666508) for marketing purposes described in the Regulations and Privacy Policy available below, in particular by sending messages via e-mail to the provided e-mail address.')}`,
+      label: `${marketingRequired ? '* ' : '\ \ '}${t('I consent to the processing of my personal data by the Amazing Company Sp. z o.o. (Nowa 8, 21-007, Mełgiew, VAT ID: PL7123301205, REGON: 362666508) for marketing purposes described in the Regulations and Privacy Policy available below, in particular by sending messages via e-mail to the provided e-mail address.')}`,
     },
   },
 })
@@ -59,7 +59,7 @@ const consentsRequiredProps = (t) => ({
     type: 'boolean',
     errorMessage: t('Your consent is required!'),
     uniforms: {
-      label: `* ${t('I consent to all conditions specified in the Regulations and Privacy Policy, that are listed below, and accepts all of them. Especially I consent to the processing of my personal data by the Amazing Company Sp. z o.o. (Nowa 8, 21-007, Mełgiew, VAT ID: PL7123301205, REGON: 362666508) described in the Regulations and Privacy Policy available below, in particular for the purposes of providing access to the online course via the platform located under the domain coderoad.pl, by sending messages via e-mail to the e-mail address provided, as well as address details for administrative, billing and accounting purposes.')}`,
+      label: `* ${t('I consent that owner of the CodeRoad brand (Amazing Company Sp. z o.o., Nowa 8, 21-007, Mełgiew, NIP: 7123301203), is the administrator of my data, and I consent to all conditions specified in the Regulations and Privacy Policy, that are listed below, and accepts all of them.')}`,
     },
   },
 })
@@ -89,12 +89,12 @@ export const buySchema = (t) => ({
       required: [...addressRequired(t), ...consentsRequired(t)],
       errorMessage: '',
       uniforms: {
-        label: 'Adres',
+        label: t('Address (accounting purposes only)'),
       },
       properties: {
         ...addressProps(t),
-        ...consentsMarketingProps(t, { marketingRequired: false }),
         ...consentsRequiredProps(t),
+        ...consentsMarketingProps(t, { marketingRequired: false }),
       },
     },
   },
@@ -114,8 +114,8 @@ export const trySchema = (t) => ({
         label: '',
       },
       properties: {
-        ...consentsMarketingProps(t, { marketingRequired: true }),
         ...consentsRequiredProps(t),
+        ...consentsMarketingProps(t, { marketingRequired: true }),
       },
     },
   },

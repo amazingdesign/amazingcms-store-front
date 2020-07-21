@@ -12,6 +12,7 @@ const StyledAutoForm = styled(AutoForm)({
     fontSize: '0.8rem',
     marginLeft: 12,
     textIndent: -8,
+    whiteSpace: 'pre-wrap',
   },
 })
 

@@ -13,7 +13,7 @@ module.exports = {
   output: './',
   options: {
     debug: true,
-    removeUnusedKeys: true,
+    removeUnusedKeys: false,
     sort: true,
     func: {
       list: ['i18next.t', 'i18n.t', 't'],
