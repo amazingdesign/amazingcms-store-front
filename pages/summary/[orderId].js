@@ -30,8 +30,15 @@ const REGS = JSON.parse(getConfigSSR('REACT_APP_REGS') || '[]')
 
 const renderCurrency = (value) => String(value.toFixed(2))
 
-const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs }) => {
+const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs, additionalInfoFromQs }) => {
   const { t } = useTranslation(undefined, { useSuspense: false })
+
+  let additionalInfoParsed = null
+  try {
+    additionalInfoParsed = JSON.parse(additionalInfoFromQs)
+  } catch (error) {
+    additionalInfoParsed = {}
+  }
 
   const { Loader, ErrorMessage, data: orderData, get: getOrder, update: updateOrder } = useServiceLoaded(
     'orders',
@@ -128,7 +135,10 @@ const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs }) => {
             {t('Billing address')}
           </Typography>
           <OrderForm
-            model={{ buyerEmail: buyerEmailFromQs }}
+            model={{
+              buyerEmail: buyerEmailFromQs,
+              additionalInfo: additionalInfoParsed,
+            }}
             schema={schema(t)}
             onSubmit={makePayment}
             submitButton={(props) => (
@@ -170,20 +180,21 @@ const SummaryPage = ({ orderId, couponFromQs, buyerEmailFromQs }) => {
 
 SummaryPage.propTypes = {
   orderId: PropTypes.string.isRequired,
+  additionalInfoFromQs: PropTypes.string,
   couponFromQs: PropTypes.string,
   buyerEmailFromQs: PropTypes.string,
 }
 
 SummaryPage.getInitialProps = async ({ query, store }) => {
-  const { orderId, coupon: couponFromQs, buyerEmail: buyerEmailFromQs } = query
+  const { orderId, coupon: couponFromQs, buyerEmail: buyerEmailFromQs, additionalInfo: additionalInfoFromQs } = query
 
   const { get } = getService(store, 'orders')
 
   try {
     await get({ id: orderId, populate: ['basket'] })
-    return { orderId, couponFromQs, buyerEmailFromQs }
+    return { orderId, couponFromQs, additionalInfoFromQs, buyerEmailFromQs }
   } catch (error) {
-    return { orderId, couponFromQs, buyerEmailFromQs, error }
+    return { orderId, couponFromQs, additionalInfoFromQs, buyerEmailFromQs, error }
   }
 }
 

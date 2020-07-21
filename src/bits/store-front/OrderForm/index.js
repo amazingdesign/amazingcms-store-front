@@ -15,7 +15,7 @@ const StyledAutoForm = styled(AutoForm)({
   },
 })
 
-const OrderForm = ({ schema, model, onSubmit, onChange, submitButton }) => {
+const OrderForm = ({ schema, model, onSubmit, onChange, submitButton, ...otherProps }) => {
   const schemaValidator = createValidator(schema)
   const bridge = new JSONSchemaBridge(schema, schemaValidator)
 
@@ -28,6 +28,7 @@ const OrderForm = ({ schema, model, onSubmit, onChange, submitButton }) => {
       showInlineError={true}
       errorsField={() => null}
       submitField={submitButton}
+      {...otherProps}
     />
   )
 }
